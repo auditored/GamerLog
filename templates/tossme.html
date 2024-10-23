@@ -1,0 +1,116 @@
+<!-- templates/tossme.html -->
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    #heroPic {
+        height: 596px;
+        width: 428px;
+    }
+
+    #portfolioImg {
+        height: 408.95px;
+        width: 255px;
+    }
+</style>
+
+{% if user.is_authenticated %}
+<section class="hero-area" id="home">
+    <div style="width: 950px; margin-right: 0px; margin: auto;">
+        <div class="row hero-area-slide">
+            <div class="col-lg-6">
+                <div class="hero-area-content">
+                    <img id="heroPic" src="../../{{ first_game.coverimage }}" alt="about" />
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-area-content pr-50">
+                    <div class="section-title">
+                        <h1><i class="icofont icofont-game"></i> Best Match For You!</h1>
+                        
+                        <p style="color: rgb(118, 49, 246);">Your Top Genres: 
+                            <p style="color: white;">
+                            {% for genre in top_3_genres %} 
+                            {% if genre %}
+                            {{ genre }}, 
+                            {% endif %} 
+                            {% endfor %}
+                            </p>    
+                        </p><br>
+                        
+                        
+                    </div>
+                    <h2>{{ first_game.title }}</h2>
+                    <div class="review">
+                        <p style="color: rgb(118, 49, 246);">Point: {{ first_game.rating }} | 5.0 - {{first_game.publishyear}}</p>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error nostrum dignissimos illum deleniti
+                        suscipit corrupti dicta eum architecto ipsum, perspiciatis distinctio? Labore porro facere iure
+                        voluptates quas mollitia debitis magni.</p>
+                    <div class="slide-trailor">
+                        <a class="theme-btn theme-btn2"
+                            href="javascript:{document.getElementById('{{first_game.title}}').submit()}" style="float:right;">
+                            For More</a>
+                    </div>
+                </div>
+            </div>
+            <form action="{% url 'gamedetail' first_game.title%}" method="post" id="{{first_game.title}}" style="display:none;">
+                {%csrf_token%}
+                <input type="hidden" name="userid" value="{{ user.id }}">
+            </form>
+        </div>
+    </div>
+
+</section>
+
+<!-- portfolio section start -->
+<section class="portfolio-area pt-60" style="padding-bottom: 60px;">
+    <div class="container">
+        <div class="row flexbox-center">
+            <div class="col-lg-12 text-center text-lg-center">
+                <div class="section-title">
+                    <h1><i class="icofont icofont-game"></i> Here Are Other Matches!! </h1>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row portfolio-item">
+                    {% if recommended_games %}
+                    {% for game in recommended_games %}
+                    <div style="max-height: 520px;" class="col-md-3 col-sm-6 all">
+                        <div class="single-portfolio">
+                            <div class="single-portfolio-img">
+                                <a href="javascript:{document.getElementById('{{game.title}}').submit()}">
+                                    <img id="portfolioImg" src="../../{{ game.coverimage }}" alt="portfolio" />
+                                </a>
+                            </div>
+                            <div class="portfolio-content">
+                                <h3>{{ game.title }}</h3>
+                                <p style="color: rgb(118, 49, 246);">Point: {{ game.rating }} | 5.0 -
+                                    {{game.publishyear}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="{% url 'gamedetail' game.title%}" method="post" id="{{game.title}}"
+                        style="display:none;">
+                        {%csrf_token%}
+                        <input type="hidden" name="userid" value="{{ user.id }}">
+                    </form>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- portfolio section end -->
+{% else %}
+<meta http-equiv="refresh" content="0,{% url 'home' %}">
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% load static %}
+<!-- footer section start -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-sm-6">
+        <div class="widget"><br><br>
+          <img src="../../static/img/logo.png" alt="about" />
+          <p>Esenkent, Dudullu Osb Mah, Nato Yolu Cd 265/ 1, 34775 Ümraniye/İstanbul</p>
+          <h6><span>Call us: </span>444 7 997</h6>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="widget">
+          <h4>Webiste Map</h4>
+          <ul>
+            {% if user.is_authenticated %}
+            <li><a>Welcome, {{user.get_username }} </a></li>
+            {% endif %}
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'games' %}">Games</a></li>
+            <li><a href="{% url 'chat' %}">Find Me a Game by Describing</a></li>
+            <li><a href="{% url 'imageSearch' %}">Find Me a Game by Photo</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'tossMeGame' %}">Toss me a Game</a></li>
+            {% endif %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer><!-- footer section end -->

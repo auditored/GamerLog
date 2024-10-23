@@ -1,0 +1,84 @@
+{% load static %}
+<!--Navigation bar-->
+<header class="header">
+    <div class="container">
+        <div class="header-area">
+
+            <div class="logo">
+                <a href="{% url 'home' %}"><img src="../../static/img/logo.png" alt="logo" /></a>
+            </div>
+            <div class="header-right">
+
+
+                <form action="{% url 'search_results' %}">
+                    <input name="search" type="text" style="border-left-width: 0px; margin-left: 0px;" required />
+                    <button type="submit"><i class="icofont icofont-search"></i></button>
+                </form>
+
+                <div class="menu-area">
+
+                    <div class="responsive-menu"></div>
+                    <div class="mainmenu">
+                        <ul id="primary-menu">
+                            <li><a class="
+                                {% if 'home' in request.path %}
+                                active
+                                {% endif %}" href="{% url 'home' %}">Home</a></li>
+                            <li><a class="
+                                {% if 'games' in request.path %}
+                                active
+                                {% endif %}" href="{% url 'games' %}">Games</a>
+                                {% if user.is_authenticated %}
+                                <ul>
+                                    <li>
+                                    <li><a href="javascript:{document.getElementById('myGames').submit()}">My Games</a>
+                                    </li>
+                                    <form action="{% url 'myGames' %}" method="post" id="myGames">
+                                        {%csrf_token%}
+                                        <input type="hidden" name="userid" value="{{ user.id }}">
+                                    </form>
+                                    </li>
+                                </ul>
+                                {% endif %}
+                            </li>
+                            <li><a style="color: white;">Find Me a Game</a>
+                                <ul>
+                                    <li>
+                                        <a class="
+                                        {% if 'chat' in request.path %}
+                                        {% endif %}" href="{% url 'chat' %}">By Describing</a>
+                                    </li>
+                                    <li>
+                                        <a class="
+                                        {% if 'imageSearch' in request.path %}
+                                        {% endif %}" href="{% url 'imageSearch' %}">By Photo</a>
+                                    </li>
+                                </ul>
+                            
+                            </li>
+                            
+
+                        {% if user.is_authenticated %}
+                        <li><a class="
+                                    {% if 'tossMeGame' in request.path %}
+                                    active
+                                    {% endif %}" href="{% url 'tossMeGame' %}">Toss Me a Game</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <li><a>Welcome, {{user.get_username }} </a></li>
+                        <li><a class="theme-btn theme-btn2" onclick="window.location.href='{% url 'logout' %}'"
+                                style="color:white">Log Out</a></li>
+                        {% else %}
+                        <li><a class="theme-btn theme-btn2" onclick="window.location.href='{% url 'login' %}'"
+                                style="color:white">Login</a></li>
+                        {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</header>
+<!--end of Navigation bar-->

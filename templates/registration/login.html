@@ -1,0 +1,36 @@
+<!-- templates/registration/login.html -->
+{% extends "registration/base_registration.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- authorization form -->
+<form method="post" action="{% url 'login' %}" class="sign__form">
+  {% csrf_token %}
+  <a href="{% url 'home' %}" class="sign__logo">
+    <img src="../../static/img/logo.png" alt="">
+  </a>
+
+  <div class="sign__group">
+    <input type="text" name="username" id="username" class="sign__input" placeholder="Username">
+  </div>
+
+  <div class="sign__group">
+    <input type="password" name="password" id="password" class="sign__input" placeholder="Password">
+  </div>
+
+  <div class="sign__group sign__group--checkbox">
+    <input id="remember" name="remember" type="checkbox" checked="checked">
+    <!-- <label for="remember">Remember Me</label> -->
+  </div>
+
+  <button class="sign__btn" type="submit" name="btn" value="Login">Log In</button>
+
+  <span class="sign__text">Don't have an account? <a href="{% url 'signup' %}">Sign up!</a></span>
+
+  <span class="sign__text"><a href="{% url 'password_reset' %}">Forgot password?</a></span>
+  <!-- {{ form.as_p }} -->
+</form>
+<!-- end authorization form -->
+{% endblock %}

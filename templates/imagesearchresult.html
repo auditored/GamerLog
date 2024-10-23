@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  .card {
+    border: 0px solid rgba(0,0,0,.125); 
+  }
+</style>
+
+<!-- breadcrumb area start -->
+<section class="breadcrumb-area">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="breadcrumb-area-content">
+                  <h1>Find a Game By Photo</h1>
+                  <h3>Powered by GoogleCloud</h3>
+              </div>
+          </div>
+      </div>
+  </div>
+</section><!-- breadcrumb area end -->
+
+<section class="bg bg-gradient ">
+  <div class="container py-5">
+
+    <h1>Result</h1>
+    {% if closest_match %}
+      <img src="{{ closest_match.image.url }}" width="500">
+      <p>Closest match: {{ closest_match.description }}</p>
+      <p>Score: {{ closest_match.score }}</p>
+      {% if closest_match.pages_with_matching_images %}
+        <p>Pages with matching images:</p>
+        <ul>
+          {% for page in closest_match.pages_with_matching_images %}
+            <li><a href="{{ page.url }}">{{ page.url }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% else %}
+      <p>{{ error_message }}</p>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

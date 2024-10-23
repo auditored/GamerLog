@@ -1,0 +1,104 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+  #portfolioImg {
+    height: 408.95px;
+    width: 255px;
+  }
+</style>
+
+{% if user.is_authenticated %}
+<!-- breadcrumb area start -->
+<section class="breadcrumb-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-area-content">
+          <h1>My Games</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- breadcrumb area end -->
+
+<!-- portfolio section start -->
+<section class="portfolio-area pt-60" style="padding-bottom: 60px;">
+  <div class="container">
+    <div class="row flexbox-center">
+      <div class="col-lg-6 text-center text-lg-center">
+        <div class="portfolio-menu">
+          <ul>
+            <li data-filter=".fav" class="active">My Favorites</li>
+            <li data-filter=".lib">My Library</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-lg-12">
+        
+        <div class="row portfolio-item">
+          
+
+          {% if favGames %}
+          {% for game in favGames %}
+          <div style="max-height: 520px;" class="col-md-3 col-sm-6 fav">
+            <div class="single-portfolio">
+              <div class="single-portfolio-img">
+                <a href="javascript:{document.getElementById('{{game.title}}').submit()}">
+                  <img id="portfolioImg" src="../../{{ game.coverimage }}" alt="portfolio" />
+                </a>
+              </div>
+              <div class="portfolio-content">
+                <h3>{{ game.title }}</h3>
+                <p style="color: rgb(118, 49, 246);">Point: {{ game.rating }} | 5.0 - {{game.publishyear}}</p>
+              </div>
+              <form action="{% url 'gamedetail' game.title%}" method="post" id="{{game.title}}" style="display:none;">
+                {%csrf_token%}
+                <input type="hidden" name="userid" value="{{ user.id }}">
+              </form>
+            </div>
+
+          </div>
+          
+          {% endfor %}
+          {% endif %}
+       
+          {% if gameLib %}
+          {% for game in gameLib %}
+          <div style="max-height: 520px;" class="col-md-3 col-sm-6 lib">
+            <div class="single-portfolio">
+              <div class="single-portfolio-img">
+                <a href="javascript:{document.getElementById('{{game.title}}').submit()}">
+                  <img id="portfolioImg" src="../../{{ game.coverimage }}" alt="portfolio" />
+                </a>
+              </div>
+              <div class="portfolio-content">
+                <h3>{{ game.title }}</h3>
+                <p style="color: rgb(118, 49, 246);">Point: {{ game.rating }} | 5.0 - {{game.publishyear}}</p>
+              </div>
+              <form action="{% url 'gamedetail' game.title%}" method="post" id="{{game.title}}" style="display:none;">
+                {%csrf_token%}
+                <input type="hidden" name="userid" value="{{ user.id }}">
+              </form>
+            </div> 
+          </div>
+          
+          {% endfor %}
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+</section><!-- portfolio section end -->
+{% else %}
+<meta http-equiv="refresh" content="0,{% url 'home' %}">
+{% endif %}
+{% endblock %}
+

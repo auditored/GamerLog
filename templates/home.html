@@ -1,0 +1,218 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<style>
+  #heroPic {
+    height: 596px;
+    width: 428px;
+  }
+
+  #portfolioImg {
+    height: 408.95px;
+    width: 255px;
+  }
+</style>
+
+<!-- hero area start -->
+<section class="hero-area" id="home">
+  <div class="container">
+    <div class="hero-area-slider">
+      {% if randomItems %}
+      {% for game in randomItems %}
+      <div class="row hero-area-slide">
+        <div class="col-lg-6 col-md-5">
+          <div class="hero-area-content">
+            <img id="heroPic" src="../../{{ game.coverimage }}" alt="about" />
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-7">
+          <div class="hero-area-content pr-50">
+            <h2>{{ game.title }}</h2>
+            <div class="review">
+              <p style="color: rgb(118, 49, 246);">Point: {{ game.rating }} | 5.0 - {{game.publishyear}}</p>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis itaque quam quae fugit deserunt
+              voluptas ullam ratione, libero at cumque illum ipsa exercitationem facilis! Officiis sapiente maiores
+              cupiditate a nostrum.</p>
+            <div class="slide-trailor">
+              <a class="theme-btn theme-btn2" href="javascript:{document.getElementById('{{game.title}}').submit()}"
+                style="
+                float:right;"> For More</a>
+            </div>
+          </div>
+        </div>
+        <form action="{% url 'gamedetail' game.title%}" method="post" id="{{game.title}}" style="display:none;">
+          {%csrf_token%}
+          <input type="hidden" name="userid" value="{{ user.id }}">
+        </form>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="hero-area-thumb">
+      <div class="thumb-prev">
+        <div class="row hero-area-slide">
+          <div class="col-lg-6">
+            <div class="hero-area-content">
+              <img src="../../static/img/slide3.png" alt="about" />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="hero-area-content pr-50">
+              <h2>Batman Arkham City</h2>
+              <div class="review">
+                <div class="author-review">
+                  <i class="icofont icofont-star"></i>
+                  <i class="icofont icofont-star"></i>
+                  <i class="icofont icofont-star"></i>
+                  <i class="icofont icofont-star"></i>
+                  <i class="icofont icofont-star"></i>
+                </div>
+              </div>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit sint culpa quia aut quod reiciendis
+                quibusdam nemo, impedit provident laudantium dignissimos adipisci sunt! Qui hic pariatur ab ducimus
+                molestiae iusto?</p>
+              <div class="slide-trailor">
+                <a class="theme-btn theme-btn2" href="game-details.html" style="float:right;"> For More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="thumb-next">
+        <div class="row hero-area-slide">
+          <div class="col-lg-6">
+            <div class="hero-area-content">
+              <img src="../../static/img/slide2blur.png" alt="about" />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="hero-area-content pr-50">
+              <h2>Witcher 3</h2>
+              <div class="review">
+                <div class="author-review">
+                  <i class="icofont icofont-star"></i>
+                  <i class="icofont icofont-star"></i>
+                  <i class="icofont icofont-star"></i>
+                  <i class="icofont icofont-star"></i>
+                  <i class="icofont icofont-star"></i>
+                </div>
+              </div>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error nostrum dignissimos illum deleniti
+                suscipit corrupti dicta eum architecto ipsum, perspiciatis distinctio? Labore porro facere iure
+                voluptates quas mollitia debitis magni.</p>
+              <div class="slide-trailor">
+                <a class="theme-btn theme-btn2" href="game-details.html" style="float:right;"> For More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- hero area end -->
+
+<!-- portfolio section start -->
+<section class="portfolio-area pt-60" style="padding-bottom: 60px;">
+  <div class="container">
+    <div class="row flexbox-center">
+      <div class="col-lg-6 text-center text-lg-left">
+        <div class="section-title">
+          <h1><i class="icofont icofont-game"></i> Explore Video Games</h1>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center text-lg-right">
+        <div class="portfolio-menu">
+          <ul>
+            <li data-filter=".all" class="active">All Games</li>
+            <li data-filter=".top">Top Rated</li>
+            <li data-filter=".new">New Released</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row portfolio-item">
+          {% if all %}
+          {% for game in all %}
+          <div style="max-height: 520px;" class="col-md-3 col-sm-6 all">
+            <div class="single-portfolio">
+              <div class="single-portfolio-img">
+                <a href="javascript:{document.getElementById('{{game.title}}').submit()}">
+                  <img id="portfolioImg" src="{{ game.coverimage }}" alt="portfolio" />
+                </a>
+              </div>
+              <div class="portfolio-content">
+                <h3>{{ game.title }}</h3>
+                <p style="color: rgb(118, 49, 246);">Point: {{ game.rating }} | 5.0 - {{game.publishyear}}</p>
+              </div>
+            </div>
+          </div>
+          <form action="{% url 'gamedetail' game.title%}" method="post" id="{{game.title}}" style="display:none;">
+            {%csrf_token%}
+            <input type="hidden" name="userid" value="{{ user.id }}">
+          </form>
+          {% endfor %}
+          {% endif %}
+        </div>
+
+        <div class="row portfolio-item">
+          {% if fav %}
+          {% for game in fav %}
+          <div style="max-height: 520px;" class="col-md-3 col-sm-6 top">
+            <div class="single-portfolio">
+              <div class="single-portfolio-img">
+                <a href="javascript:{document.getElementById('{{game.title}}').submit()}">
+                  <img id="portfolioImg" src="{{ game.coverimage }}" alt="portfolio" />
+                </a>
+              </div>
+              <div class="portfolio-content">
+                <h3>{{ game.title }}</h3>
+                <p style="color: rgb(118, 49, 246);">Point: {{ game.rating }} | 5.0 - {{game.publishyear}}</p>
+              </div>
+            </div>
+          </div>
+          <form action="{% url 'gamedetail' game.title%}" method="post" id="{{game.title}}" style="display:none;">
+            {%csrf_token%}
+            <input type="hidden" name="userid" value="{{ user.id }}">
+          </form>
+          {% endfor %}
+          {% endif %}
+        </div>
+
+        <div class="row portfolio-item">
+          {% if new %}
+          {% for game in new %}
+          <div style="max-height: 520px;" class="col-md-3 col-sm-6 new">
+            <div class="single-portfolio">
+              <div class="single-portfolio-img">
+                <a href="javascript:{document.getElementById('{{game.title}}').submit()}">
+                  <img id="portfolioImg" src="{{ game.coverimage }}" alt="portfolio" />
+                </a>
+              </div>
+              <div class="portfolio-content">
+                <h3>{{ game.title }}</h3>
+                <p style="color: rgb(118, 49, 246);">Point: {{ game.rating }} | 5.0 - {{game.publishyear}}</p>
+              </div>
+            </div>
+          </div>
+          <form action="{% url 'gamedetail' game.title%}" method="post" id="{{game.title}}" style="display:none;">
+            {%csrf_token%}
+            <input type="hidden" name="userid" value="{{ user.id }}">
+          </form>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</section><!-- portfolio section end -->
+
+{% endblock %}

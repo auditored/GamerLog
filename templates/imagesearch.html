@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  .card {
+    border: 0px solid rgba(0, 0, 0, .125);
+  }
+</style>
+
+<!-- breadcrumb area start -->
+<section class="breadcrumb-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-area-content">
+          <h1>Find a Game By Photo</h1>
+          <h3>Powered by GoogleCloud</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- breadcrumb area end -->
+
+<section class="bg bg-gradient ">
+  <div class="container py-5">
+
+
+
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-7 col-xl-5 mb-4 mb-md-0">
+        <h1>Reverse Image Search</h1>
+        <h1>Working On It, Not Ready Yet...</h1>
+        <!--<form method="post" enctype="multipart/form-data" action="{% url 'result' %}">
+          {% csrf_token %}
+          <input type="file" name="image" accept="image/*">
+          <button type="submit">Search</button>
+        </form>-->
+      </div>
+    </div>
+
+  </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    #portfolioImg {
+        height: 408.95px;
+        width: 255px;
+    }
+</style>
+
+<!-- breadcrumb area start -->
+<section class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-area-content">
+                    <h1>Search Results</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- breadcrumb area end -->
+
+<!-- portfolio section start -->
+<section class="portfolio-area pt-60" style="padding-bottom: 60px;">
+    <div class="container">
+        <div class="row flexbox-center">
+            <div class="col-lg-6 text-center text-lg-left">
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+               
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row portfolio-item">
+                    {% if games %}
+                    {% for game in games %}
+                    <div style="max-height: 520px;" class="col-md-3 col-sm-6 all">
+                        <div class="single-portfolio">
+                            <div class="single-portfolio-img">
+                                <a href="javascript:{document.getElementById('{{game.title}}').submit()}">
+                                    <img id="portfolioImg" src="../../{{ game.coverimage }}" alt="portfolio" />
+                                </a>
+                            </div>
+                            <div class="portfolio-content">
+                                <h3>{{ game.title }}</h3>
+                                <p style="color: rgb(118, 49, 246);">Point: {{ game.rating }} | 5.0 -
+                                    {{game.publishyear}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="{% url 'gamedetail' game.title%}" method="post" id="{{game.title}}"
+                        style="display:none;">
+                        {%csrf_token%}
+                        <input type="hidden" name="userid" value="{{ user.id }}">
+                    </form>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+        </div> 
+</section><!-- portfolio section end -->
+
+{% endblock %}
